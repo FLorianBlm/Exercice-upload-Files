@@ -33,10 +33,6 @@
 
                     if (move_uploaded_file($file_tmp, $file_destination)) {
                         $uploaded[$position] = $file_destination;
-                        echo '<figure>' . PHP_EOL;
-                        echo '    <img src=' . $file_destination . ' width=100px heigth=100px >' . PHP_EOL;
-                        echo '    <figcaption>' . $file_name_new . '</figcaption' . PHP_EOL;
-                        echo '</figure>' . '<br>';
                     } else {
                         $failed[$position] = "[{$file_name}] n'a pas été téléchargé.";
                     }
@@ -53,10 +49,13 @@
         if (!empty($failed)) {
             echo 'Une erreur est survenu pour ' . $failed[0];
         }
+
+        $displays = new FilesystemIterator("./uploads/", FilesystemIterator::KEY_AS_FILENAME);
+        foreach ($displays as $display) {
+            echo '<img src=' . $display . ' width=100px heigth=100px >' . '\n';
+            echo  $display->getFilename() . '\n';
+        }
     }
-
-
     ?>
-
 </body>
 </html>
